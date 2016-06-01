@@ -1,3 +1,5 @@
+// compile notes: change System to "Windows" and Entry Point to "mainCRTStartup"
+
 #include <Windows.h>
 #include <string>
 
