@@ -1,8 +1,6 @@
 #include <Windows.h>
 #include <string>
 
-using std::string;
-
 HWINEVENTHOOK hEvent;
 
 INPUT ip;
@@ -18,7 +16,7 @@ VOID CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
   std::basic_string<TCHAR> t(bufsize, 0);
   GetWindowText(hwnd, &t[0], bufsize + 1);
 
-  string title;
+  std::string title;
 
   #ifndef UNICODE
     title = t;
