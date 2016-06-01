@@ -21,7 +21,7 @@ VOID CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
   string title;
 
   #ifndef UNICODE
-    strTitle = title;
+    title = t;
   #else
     std::wstring wStr = t;
     title = std::string(wStr.begin(), wStr.end());
