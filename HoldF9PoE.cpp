@@ -1,4 +1,4 @@
-// compile notes: change System to "Windows" and Entry Point to "mainCRTStartup"
+// compile notes: change SubSystem to "Windows (/SUBSYSTEM:WINDOWS)" and Entry Point to "mainCRTStartup"
 
 #include <Windows.h>
 #include <string>
@@ -6,6 +6,8 @@
 HWINEVENTHOOK hEvent;
 
 INPUT ip;
+
+bool f9Pressed;
 
 VOID CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
                                    DWORD dwEvent,
@@ -20,23 +22,25 @@ VOID CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
 
   std::string title;
 
-  #ifndef UNICODE
-    title = t;
-  #else
-    std::wstring wStr = t;
-    title = std::string(wStr.begin(), wStr.end());
-  #endif
+#ifndef UNICODE
+  title = t;
+#else
+  std::wstring wStr = t;
+  title = std::string(wStr.begin(), wStr.end());
+#endif
 
   if (title == "Path of Exile") {
     // Press the "f9" key
     ip.ki.wVk = 0x78; // virtual-key code for the "f9" key
     ip.ki.dwFlags = 0; // 0 for key press
     SendInput(1, &ip, sizeof(INPUT));
+    f9Pressed = true;
   }
-  else {
+  else if (f9Pressed) {
     // Release the "f9" key
     ip.ki.dwFlags = KEYEVENTF_KEYUP;
     SendInput(1, &ip, sizeof(INPUT));
+    f9Pressed = false;
   }
 }
 
@@ -46,12 +50,12 @@ void unhookEvent() {
 
 int main() {
   hEvent = SetWinEventHook(EVENT_SYSTEM_FOREGROUND,
-                            EVENT_SYSTEM_FOREGROUND,
-                            NULL,
-                            WinEventProcCallback,
-                            0,
-                            0,
-                            WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
+                           EVENT_SYSTEM_FOREGROUND,
+                           NULL,
+                           WinEventProcCallback,
+                           0,
+                           0,
+                           WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
 
   atexit(unhookEvent);
 
@@ -59,6 +63,8 @@ int main() {
   ip.ki.wScan = 0;
   ip.ki.time = 0;
   ip.ki.dwExtraInfo = 0;
+
+  f9Pressed = false;
 
   MSG msg;
   while (GetMessage(&msg, NULL, 0, 0)) {
