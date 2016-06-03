@@ -11,7 +11,7 @@ If for some reason you want to toggle it off in-game, you can just change your a
 At the moment there is no visual indicator, but you can open up your task manager to see that it is running.  
   
 # Installation  
-Move HoldF9PoE.exe to a folder somewhere (i.e. C:\Apps\HoldF9PoE)  
-Create shortcut to HoldF9PoE.exe  
-Move shortcut to "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"  
-HoldF9PoE.exe will now run when your computer starts and you'll never have to run it yourself  
+- move HoldF9PoE.exe to a folder somewhere (i.e. C:\Apps\HoldF9PoE)  
+- create shortcut to HoldF9PoE.exe  
+- move shortcut to "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"  
+- HoldF9PoE.exe will now run when your computer starts and you'll never have to run it yourself  
