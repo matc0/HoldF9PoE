@@ -9,25 +9,26 @@ INPUT ip;
 
 bool f9Pressed;
 
-VOID CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
+void CALLBACK WinEventProcCallback(HWINEVENTHOOK hWinEventHook,
                                    DWORD dwEvent,
                                    HWND hwnd,
                                    LONG idObject,
                                    LONG idChild,
                                    DWORD dwEventThread,
                                    DWORD dwmsEventTime) {
+
   int bufsize = GetWindowTextLength(hwnd);
   std::basic_string<TCHAR> t(bufsize, 0);
   GetWindowText(hwnd, &t[0], bufsize + 1);
 
   std::string title;
 
-#ifndef UNICODE
-  title = t;
-#else
-  std::wstring wStr = t;
-  title = std::string(wStr.begin(), wStr.end());
-#endif
+  #ifndef UNICODE
+    title = t;
+  #else
+    std::wstring wStr = t;
+    title = std::string(wStr.begin(), wStr.end());
+  #endif
 
   if (title == "Path of Exile") {
     // Press the "f9" key
